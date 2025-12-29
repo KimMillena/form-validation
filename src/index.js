@@ -73,7 +73,40 @@ const validateForm = () => {
     }
   };
 
-  return { validateEmail, validateCountry, validatePostalCode };
+  const validatePassword = (password, passwordError) => {
+    if (password.validity.valueMissing) {
+      setErrorMessage(passwordError, "Please enter a password.");
+      passwordError.classList.add("active");
+    } else if (password.validity.tooShort) {
+      setErrorMessage(
+        passwordError,
+        `Please enter a password that is atleast ${password.minLength} characters long.`
+      );
+      passwordError.classList.add("active");
+    } else {
+      passwordError.classList.remove("active");
+    }
+  };
+
+  const validateConfirmPass = (password, confirmPass, confirmPassError) => {
+    if (confirmPass.validity.valueMissing) {
+      setErrorMessage(confirmPassError, "Please confirm your password.");
+      confirmPassError.classList.add("active");
+    } else if (password.value !== confirmPass.value) {
+      setErrorMessage(confirmPassError, "Please enter the same password.");
+      confirmPassError.classList.add("active");
+    } else {
+      confirmPassError.classList.remove("active");
+    }
+  };
+
+  return {
+    validateEmail,
+    validateCountry,
+    validatePostalCode,
+    validatePassword,
+    validateConfirmPass,
+  };
 };
 
 const setupForm = () => {
@@ -105,6 +138,14 @@ const setupForm = () => {
     if (!postalCode.validity.valid) {
       validate.validatePostalCode(postalCode, postalCodeError);
     }
+
+    if (!password.validity.valid) {
+      validate.validatePassword(password, passwordError);
+    }
+
+    if (!confirmPass.validity.valid) {
+      validate.validateConfirmPass(password, confirmPass, confirmPassError);
+    }
   });
 
   email.addEventListener("input", () => {
@@ -124,10 +165,13 @@ const setupForm = () => {
 
   password.addEventListener("input", () => {
     console.log(password.value);
+    validate.validatePassword(password, passwordError);
+    validate.validateConfirmPass(password, confirmPass, confirmPassError);
   });
 
   confirmPass.addEventListener("input", () => {
     console.log(confirmPass.value);
+    validate.validateConfirmPass(password, confirmPass, confirmPassError);
   });
 };
 
