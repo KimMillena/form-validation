@@ -48,7 +48,16 @@ const validateForm = () => {
     }
   };
 
-  return { validateEmail };
+  const validateCountry = (country, countryError) => {
+    if (country.validity.valueMissing) {
+      setErrorMessage(countryError, "Please select a country.");
+      countryError.classList.add("active");
+    } else {
+      countryError.classList.remove("active");
+    }
+  };
+
+  return { validateEmail, validateCountry };
 };
 
 const setupForm = () => {
@@ -72,6 +81,10 @@ const setupForm = () => {
     if (!email.validity.valid) {
       validate.validateEmail(email, emailError);
     }
+
+    if (!country.validity.valid) {
+      validate.validateCountry(country, countryError);
+    }
   });
 
   email.addEventListener("input", () => {
@@ -81,6 +94,7 @@ const setupForm = () => {
 
   country.addEventListener("input", () => {
     console.log(country.value);
+    validate.validateCountry(country, countryError);
   });
 
   postalCode.addEventListener("input", () => {
