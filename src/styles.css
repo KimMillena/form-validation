@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+:root {
+  --error-text: #ff6347;
+}
+
 body {
   height: 100vh;
   display: flex;
@@ -19,6 +23,15 @@ body {
 
 .form-row > label {
   margin-bottom: 0.25rem;
+}
+
+.error {
+  display: none;
+}
+
+.error.active {
+  display: block;
+  color: var(--error-text);
 }
 
 .submit-btn {

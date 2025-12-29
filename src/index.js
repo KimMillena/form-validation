@@ -31,12 +31,52 @@ const getFormElements = () => {
   };
 };
 
+const validateForm = () => {
+  const setErrorMessage = (errorElement, errorMessage) => {
+    errorElement.textContent = `${errorMessage}`;
+  };
+
+  const validateEmail = (email, emailError) => {
+    if (email.validity.valueMissing) {
+      setErrorMessage(emailError, "Please enter an email.");
+      emailError.classList.add("active");
+    } else if (email.validity.typeMismatch) {
+      emailError.classList.add("active");
+      setErrorMessage(emailError, `Please enter a valid email address.`);
+    } else {
+      emailError.classList.remove("active");
+    }
+  };
+
+  return { validateEmail };
+};
+
 const setupForm = () => {
-  const { form, email, country, postalCode, password, confirmPass } =
-    getFormElements();
+  const {
+    form,
+    email,
+    emailError,
+    country,
+    countryError,
+    postalCode,
+    postalCodeError,
+    password,
+    passwordError,
+    confirmPass,
+    confirmPassError,
+  } = getFormElements();
+  const validate = validateForm();
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (!email.validity.valid) {
+      validate.validateEmail(email, emailError);
+    }
+  });
 
   email.addEventListener("input", () => {
     console.log(email.value);
+    validate.validateEmail(email, emailError);
   });
 
   country.addEventListener("input", () => {
