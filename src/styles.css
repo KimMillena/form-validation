@@ -3,3 +3,24 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form-row > label {
+  margin-bottom: 0.25rem;
+}
+
+.submit-btn {
+  width: 100%;
+}
