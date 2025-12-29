@@ -8,7 +8,43 @@
 </head>
 
 <body>
+    <form class="form">
+        <div class="form-title-row">
+            <h1 class="form-title">Registration Form</h1>
+        </div>
 
+        <div class="form-row">
+            <label for="email">Email:</label>
+            <input type="text" class="email" id="email" required>
+        </div>
+        <div class="form-row">
+            <label for="country">Country:</label>
+            <select id="country" required>
+                <option value="" selected disabled hidden>Select an option:</option>
+                <option value="US">United States</option>
+                <option value="UK">United Kingdom</option>
+                <option value="JP">Japan</option>
+                <option value="PH">Philippines</option>
+                <option value="SK">South Korea</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="postal-code">Postal Code:</label>
+            <input type="number" class="postal-code" id="postal-code" required>
+        </div>
+        <div class="form-row">
+            <label for="password">Password:</label>
+            <input type="password" class="password" id="password" required>
+        </div>
+        <div class="form-row">
+            <label for="confirm-password">Confirm Password:</label>
+            <input type="password" class="confirm-password" id="confirm-password" required>
+        </div>
+
+        <div class="btn-row">
+            <button class="submit-btn">Submit</button>
+        </div>
+    </form>
 </body>
 
 </html>
