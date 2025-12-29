@@ -57,7 +57,23 @@ const validateForm = () => {
     }
   };
 
-  return { validateEmail, validateCountry };
+  const validatePostalCode = (postalCode, postalCodeError) => {
+    console.log(postalCode, postalCodeError);
+    if (postalCode.validity.valueMissing) {
+      setErrorMessage(postalCodeError, "Please enter a postal code.");
+      postalCodeError.classList.add("active");
+    } else if (postalCode.validity.tooShort) {
+      setErrorMessage(
+        postalCodeError,
+        `Please enter a postal code that is atleast ${postalCode.minLength} digits e.g 1111.`
+      );
+      postalCodeError.classList.add("active");
+    } else {
+      postalCodeError.classList.remove("active");
+    }
+  };
+
+  return { validateEmail, validateCountry, validatePostalCode };
 };
 
 const setupForm = () => {
@@ -85,6 +101,10 @@ const setupForm = () => {
     if (!country.validity.valid) {
       validate.validateCountry(country, countryError);
     }
+
+    if (!postalCode.validity.valid) {
+      validate.validatePostalCode(postalCode, postalCodeError);
+    }
   });
 
   email.addEventListener("input", () => {
@@ -99,6 +119,7 @@ const setupForm = () => {
 
   postalCode.addEventListener("input", () => {
     console.log(postalCode.value);
+    validate.validatePostalCode(postalCode, postalCodeError);
   });
 
   password.addEventListener("input", () => {
