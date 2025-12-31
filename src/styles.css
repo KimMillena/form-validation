@@ -1,11 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
 }
 
 :root {
-  --error-text: #ff6347;
+  --form-bg: #fff;
+
+  --red: red;
+
+  --correct-color: #228b22;
+  --error-color: #ff6347;
+
+  --light-color: #fff;
+  --dark-color: #333;
+  --darker-color: #111111;
 }
 
 body {
@@ -15,27 +27,82 @@ body {
   align-items: center;
 }
 
+/* FORM STYLINGS */
+
+.form {
+  width: clamp(200px, 60vh, 500px);
+  height: 800px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 1px 1px 4px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 0.25rem;
+  padding: 2rem;
+  gap: 1rem;
+}
+
 .form-row {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  flex: 1;
+}
+
+.form-row .required-asterisk {
+  color: var(--red);
 }
 
 .form-row > label {
   margin-bottom: 0.25rem;
 }
 
+.form-row input,
+.form-row select {
+  font-size: 1rem;
+  border: 1px solid var(--dark-color);
+  border-radius: 0.25rem;
+  padding: 1rem;
+}
+
+/* VALIDATION STYLINGS */
+
+.form-row input:focus:invalid,
+.form-row select:focus:invalid,
+.form-row input:focus:valid,
+.form-row select:focus:valid {
+  outline: none;
+}
+
+.form-row input:invalid:user-invalid,
+.form-row select:invalid:user-invalid {
+  border: 1px solid var(--error-color);
+}
+
+.form-row input:valid:user-valid,
+.form-row select:valid:user-valid {
+  border: 1px solid var(--correct-color);
+}
+
 .error {
-  display: none;
+  min-height: 1.2em;
+  visibility: hidden;
+  margin-top: 0.25rem;
 }
 
 .error.active {
-  display: block;
-  color: var(--error-text);
+  visibility: visible;
+  color: var(--error-color);
 }
 
 .submit-btn {
+  color: var(--light-color);
   width: 100%;
+  background-color: var(--dark-color);
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: var(--darker-color);
 }
 
 /* DIALOG STYLINGS */
