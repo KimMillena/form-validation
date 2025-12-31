@@ -37,3 +37,25 @@ body {
 .submit-btn {
   width: 100%;
 }
+
+/* DIALOG STYLINGS */
+
+.dialog {
+  height: clamp(150px, 60vw, 250px);
+  border-radius: 1rem;
+  margin: revert;
+}
+
+.dialog-content {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.dialog-icon {
+  font-size: 2rem;
+}

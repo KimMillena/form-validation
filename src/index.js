@@ -16,6 +16,8 @@ const getFormElements = () => {
   const passwordError = document.querySelector(".password-error");
   const confirmPassError = document.querySelector(".confirm-password-error");
 
+  const dialog = document.querySelector(".dialog");
+
   return {
     form,
     email,
@@ -28,6 +30,7 @@ const getFormElements = () => {
     passwordError,
     confirmPass,
     confirmPassError,
+    dialog,
   };
 };
 
@@ -40,11 +43,14 @@ const validateForm = () => {
     if (email.validity.valueMissing) {
       setErrorMessage(emailError, "Please enter an email.");
       emailError.classList.add("active");
+      return false;
     } else if (email.validity.typeMismatch) {
       emailError.classList.add("active");
       setErrorMessage(emailError, `Please enter a valid email address.`);
+      return false;
     } else {
       emailError.classList.remove("active");
+      return true;
     }
   };
 
@@ -52,8 +58,10 @@ const validateForm = () => {
     if (country.validity.valueMissing) {
       setErrorMessage(countryError, "Please select a country.");
       countryError.classList.add("active");
+      return false;
     } else {
       countryError.classList.remove("active");
+      return true;
     }
   };
 
@@ -62,14 +70,17 @@ const validateForm = () => {
     if (postalCode.validity.valueMissing) {
       setErrorMessage(postalCodeError, "Please enter a postal code.");
       postalCodeError.classList.add("active");
+      return false;
     } else if (postalCode.validity.tooShort) {
       setErrorMessage(
         postalCodeError,
         `Please enter a postal code that is atleast ${postalCode.minLength} digits e.g 1111.`
       );
       postalCodeError.classList.add("active");
+      return false;
     } else {
       postalCodeError.classList.remove("active");
+      return true;
     }
   };
 
@@ -77,14 +88,17 @@ const validateForm = () => {
     if (password.validity.valueMissing) {
       setErrorMessage(passwordError, "Please enter a password.");
       passwordError.classList.add("active");
+      return false;
     } else if (password.validity.tooShort) {
       setErrorMessage(
         passwordError,
         `Please enter a password that is atleast ${password.minLength} characters long.`
       );
       passwordError.classList.add("active");
+      return false;
     } else {
       passwordError.classList.remove("active");
+      return true;
     }
   };
 
@@ -92,11 +106,14 @@ const validateForm = () => {
     if (confirmPass.validity.valueMissing) {
       setErrorMessage(confirmPassError, "Please confirm your password.");
       confirmPassError.classList.add("active");
+      return false;
     } else if (password.value !== confirmPass.value) {
       setErrorMessage(confirmPassError, "Please enter the same password.");
       confirmPassError.classList.add("active");
+      return false;
     } else {
       confirmPassError.classList.remove("active");
+      return true;
     }
   };
 
@@ -122,29 +139,37 @@ const setupForm = () => {
     passwordError,
     confirmPass,
     confirmPassError,
+    dialog,
   } = getFormElements();
   const validate = validateForm();
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
-    if (!email.validity.valid) {
-      validate.validateEmail(email, emailError);
-    }
 
-    if (!country.validity.valid) {
-      validate.validateCountry(country, countryError);
-    }
+    const isEmailValid = validate.validateEmail(email, emailError);
+    const isCountryValid = validate.validateCountry(country, countryError);
+    const isPostalValid = validate.validatePostalCode(
+      postalCode,
+      postalCodeError
+    );
+    const isPasswordValid = validate.validatePassword(password, passwordError);
+    const isConfirmPassValid = validate.validateConfirmPass(
+      password,
+      confirmPass,
+      confirmPassError
+    );
 
-    if (!postalCode.validity.valid) {
-      validate.validatePostalCode(postalCode, postalCodeError);
-    }
-
-    if (!password.validity.valid) {
-      validate.validatePassword(password, passwordError);
-    }
-
-    if (!confirmPass.validity.valid) {
-      validate.validateConfirmPass(password, confirmPass, confirmPassError);
+    if (
+      isEmailValid &&
+      isCountryValid &&
+      isPostalValid &&
+      isPasswordValid &&
+      isConfirmPassValid
+    ) {
+      form.style.display = "none";
+      dialog.show();
+    } else {
+      return;
     }
   });
 
