@@ -66,7 +66,6 @@ const validateForm = () => {
   };
 
   const validatePostalCode = (postalCode, postalCodeError) => {
-    console.log(postalCode, postalCodeError);
     if (postalCode.validity.valueMissing) {
       setErrorMessage(postalCodeError, "Please enter a postal code.");
       postalCodeError.classList.add("active");
@@ -174,28 +173,23 @@ const setupForm = () => {
   });
 
   email.addEventListener("input", () => {
-    console.log(email.value);
     validate.validateEmail(email, emailError);
   });
 
   country.addEventListener("input", () => {
-    console.log(country.value);
     validate.validateCountry(country, countryError);
   });
 
   postalCode.addEventListener("input", () => {
-    console.log(postalCode.value);
     validate.validatePostalCode(postalCode, postalCodeError);
   });
 
   password.addEventListener("input", () => {
-    console.log(password.value);
     validate.validatePassword(password, passwordError);
     validate.validateConfirmPass(password, confirmPass, confirmPassError);
   });
 
   confirmPass.addEventListener("input", () => {
-    console.log(confirmPass.value);
     validate.validateConfirmPass(password, confirmPass, confirmPassError);
   });
 };
