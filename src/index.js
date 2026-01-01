@@ -111,6 +111,13 @@ const validateForm = () => {
       setErrorMessage(confirmPassError, "Please enter the same password.");
       confirmPassError.classList.add("active");
       return false;
+    } else if (confirmPass.validity.tooShort) {
+      setErrorMessage(
+        confirmPassError,
+        `Please enter a password that is atleast ${confirmPass.minLength} characters long.`
+      );
+      confirmPassError.classList.add("active");
+      return false;
     } else {
       confirmPass.setCustomValidity("");
       confirmPassError.classList.remove("active");
