@@ -107,10 +107,12 @@ const validateForm = () => {
       confirmPassError.classList.add("active");
       return false;
     } else if (password.value !== confirmPass.value) {
+      confirmPass.setCustomValidity("Please enter the same password.");
       setErrorMessage(confirmPassError, "Please enter the same password.");
       confirmPassError.classList.add("active");
       return false;
     } else {
+      confirmPass.setCustomValidity("");
       confirmPassError.classList.remove("active");
       return true;
     }
